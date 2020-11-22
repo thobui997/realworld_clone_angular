@@ -1,0 +1,16 @@
+<div class="article-meta">
+  <a>
+    <img [src]="article.author.image" />
+  </a>
+
+  <div class="info">
+    <a class="author">
+      {{ article.author.username}}
+    </a>
+    <span class="date">
+      {{article.createdAt | date}}
+    </span>
+  </div>
+
+  <ng-content></ng-content>
+</div>
