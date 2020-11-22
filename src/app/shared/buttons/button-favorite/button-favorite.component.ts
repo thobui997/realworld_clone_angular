@@ -22,7 +22,7 @@ export class ButtonFavoriteComponent implements OnInit, OnDestroy {
   unsubscribe$ = new Subject<any>();
   @Input() article: ArticleModel.Article;
   @Output() toggle = new EventEmitter<boolean>();
-  isSubmitting = true;
+  isSubmitting = false;
   constructor(
     private router: Router,
     private articleService: ArticlesService,
@@ -35,7 +35,8 @@ export class ButtonFavoriteComponent implements OnInit, OnDestroy {
     this.unsubscribe$.complete();
   }
 
-  toggleFavorite() {
+  toggleFavorite(): void {
+    this.isSubmitting = true;
     this.userService.isAuth
       .pipe(
         takeUntil(this.unsubscribe$),
@@ -46,19 +47,20 @@ export class ButtonFavoriteComponent implements OnInit, OnDestroy {
           }
           if (!this.article.favorited) {
             return this.articleService.favorite(this.article.slug).pipe(
+              finalize(() => (this.isSubmitting = false)),
               tap((data) => {
                 this.toggle.emit(true);
               })
             );
           } else {
             return this.articleService.unfavorite(this.article.slug).pipe(
+              finalize(() => (this.isSubmitting = false)),
               tap((data) => {
                 this.toggle.emit(false);
               })
             );
           }
-        }),
-        finalize(() => (this.isSubmitting = false))
+        })
       )
       .subscribe();
   }

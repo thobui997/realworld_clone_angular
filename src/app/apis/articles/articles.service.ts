@@ -38,7 +38,7 @@ export class ArticlesService {
   getSingleArticle(slug: string): Observable<ArticleModel.Article> {
     return this.httpClient
       .get<ArticleModel.Article>(`${environment.api_url}/articles/${slug}`)
-      .pipe(map((data: any) => data.articles));
+      .pipe(map((data: any) => data.article));
   }
 
   createArticle(body): Observable<ArticleModel.Article> {

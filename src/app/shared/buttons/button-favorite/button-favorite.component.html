@@ -1,8 +1,9 @@
 <button
   class="btn btn-sm"
   [ngClass]="{
-    'btn-outline-primary': !article.favorited,
-    'btn-primary': article.favorited
+    disabled: isSubmitting,
+    'btn-outline-primary': !article?.favorited,
+    'btn-primary': article?.favorited
   }"
   (click)="toggleFavorite()"
 >

@@ -1,5 +1,10 @@
 import { Component, OnInit } from '@angular/core';
-import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import {
+  FormBuilder,
+  FormControl,
+  FormGroup,
+  Validators,
+} from '@angular/forms';
 import { ArticlesService } from 'app/apis/articles/articles.service';
 
 @Component({
@@ -9,6 +14,7 @@ import { ArticlesService } from 'app/apis/articles/articles.service';
 })
 export class EditorComponent implements OnInit {
   editorFormGroup: FormGroup;
+  tagField = new FormControl();
   constructor(
     private fb: FormBuilder,
     private articleService: ArticlesService
