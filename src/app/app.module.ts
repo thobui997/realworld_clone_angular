@@ -32,7 +32,7 @@ import { ToastrModule } from 'ngx-toastr';
     }),
     NgProgressHttpModule,
     ToastrModule.forRoot({
-      positionClass: 'toast-bottom-right',
+      positionClass: 'toast-top-left',
       preventDuplicates: true,
       progressBar: true,
       closeButton: true

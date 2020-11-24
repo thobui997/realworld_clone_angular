@@ -1,13 +1,12 @@
 import { Injectable } from '@angular/core';
 import {
-  HttpRequest,
-  HttpHandler,
   HttpEvent,
+  HttpHandler,
   HttpInterceptor,
+  HttpRequest,
 } from '@angular/common/http';
 import { Observable } from 'rxjs';
 import { JwtService } from 'app/apis/json-web-token/jwt.service';
-import { User } from 'app/apis/user/user.model';
 
 @Injectable()
 export class JwtInterceptor implements HttpInterceptor {

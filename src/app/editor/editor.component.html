@@ -15,7 +15,27 @@
                 formControlName="title"
                 type="text"
                 placeholder="Article Title"
+                [class.invalid]="
+                  editorFormGroup.get('title').invalid &&
+                  (editorFormGroup.get('title').dirty ||
+                    editorFormGroup.get('title').touched)
+                "
               />
+              <div
+                *ngIf="
+                  editorFormGroup.get('title').invalid &&
+                  editorFormGroup.get('title').errors &&
+                  (editorFormGroup.get('title').dirty ||
+                    editorFormGroup.get('title').touched)
+                "
+              >
+                <small
+                  class="error-messages"
+                  *ngIf="editorFormGroup.get('title').hasError('required')"
+                >
+                  The field is required.
+                </small>
+              </div>
             </fieldset>
 
             <fieldset class="form-group">
@@ -24,7 +44,29 @@
                 formControlName="description"
                 type="text"
                 placeholder="What's this article about?"
+                [class.invalid]="
+                  editorFormGroup.get('description').invalid &&
+                  (editorFormGroup.get('description').dirty ||
+                    editorFormGroup.get('description').touched)
+                "
               />
+              <div
+                *ngIf="
+                  editorFormGroup.get('description').invalid &&
+                  editorFormGroup.get('description').errors &&
+                  (editorFormGroup.get('description').dirty ||
+                    editorFormGroup.get('description').touched)
+                "
+              >
+                <small
+                  class="error-messages"
+                  *ngIf="
+                    editorFormGroup.get('description').hasError('required')
+                  "
+                >
+                  The field is required.
+                </small>
+              </div>
             </fieldset>
 
             <fieldset class="form-group">
@@ -33,8 +75,28 @@
                 formControlName="body"
                 rows="8"
                 placeholder="Write your article (in markdown)"
+                [class.invalid]="
+                  editorFormGroup.get('body').invalid &&
+                  (editorFormGroup.get('body').dirty ||
+                    editorFormGroup.get('body').touched)
+                "
               >
               </textarea>
+              <div
+                *ngIf="
+                  editorFormGroup.get('body').invalid &&
+                  editorFormGroup.get('body').errors &&
+                  (editorFormGroup.get('body').dirty ||
+                    editorFormGroup.get('body').touched)
+                "
+              >
+                <small
+                  class="error-messages"
+                  *ngIf="editorFormGroup.get('body').hasError('required')"
+                >
+                  The field is required.
+                </small>
+              </div>
             </fieldset>
 
             <fieldset class="form-group">
@@ -57,7 +119,10 @@
               </div>
             </fieldset>
 
-            <button class="btn btn-lg pull-xs-right btn-primary">
+            <button
+              class="btn btn-lg pull-xs-right btn-primary"
+              [disabled]="editorFormGroup.invalid"
+            >
               {{ isModeUpdate ? 'Update Article' : 'Publish Article' }}
             </button>
           </fieldset>

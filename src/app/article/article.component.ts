@@ -76,7 +76,11 @@ export class ArticleComponent implements OnInit {
   }
 
   deleteArticle(): void {
-    this.articleService.deleteArticle(this.article.slug).subscribe();
+    this.articleService
+      .deleteArticle(this.article.slug)
+      .subscribe((success) =>
+        this.router.navigate(['/profile', this.currentUser.username])
+      );
   }
 
   onToggleFollow(follow: boolean): void {

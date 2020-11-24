@@ -36,8 +36,8 @@ export class SettingComponent implements OnInit {
       image: [user?.image],
       username: [user.username, [Validators.required]],
       bio: [user?.bio],
-      email: [user.email, [Validators.email]],
-      password: [''],
+      email: [user.email, [Validators.required, Validators.email]],
+      password: ['', [Validators.required, Validators.minLength(6)]],
     });
   }
 

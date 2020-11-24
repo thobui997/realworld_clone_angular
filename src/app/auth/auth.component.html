@@ -1,34 +1,122 @@
 <div class="auth-page">
   <div class="container page">
     <div class="row">
-
       <div class="col-md-6 offset-md-3 col-xs-12">
-        <h1 class="text-xs-center">{{title}}</h1>
+        <h1 class="text-xs-center">{{ title }}</h1>
         <p class="text-xs-center">
-          <a routerLink="/login" *ngIf="authType === 'register'">Have an account?</a>
-          <a routerLink="/register" *ngIf="authType === 'login'">Need an account?</a>
+          <a routerLink="/login" *ngIf="authType === 'register'"
+            >Have an account?</a
+          >
+          <a routerLink="/register" *ngIf="authType === 'login'"
+            >Need an account?</a
+          >
         </p>
 
         <form [formGroup]="authForm" (ngSubmit)="submitAuthForm()">
           <fieldset [disabled]="isSubmitForm">
             <fieldset class="form-group">
-              <input *ngIf="authType === 'register'" formControlName="username" placeholder="Username"
-                class="form-control form-control-lg" type="text" />
+              <input
+                *ngIf="authType === 'register'"
+                formControlName="username"
+                placeholder="Username"
+                class="form-control form-control-lg"
+                type="text"
+                [class.invalid]="
+                  authForm?.controls.username?.invalid &&
+                  (authForm?.controls.username?.dirty ||
+                    authForm?.controls.username?.touched)
+                "
+              />
+              <div
+                *ngIf="
+                  authForm?.controls.username?.invalid &&
+                  authForm?.controls.username?.errors &&
+                  (authForm?.controls.username?.dirty ||
+                    authForm?.controls.username?.touched)
+                "
+              >
+                <small
+                  class="error-messages"
+                  *ngIf="authForm?.controls.username?.errors?.required"
+                  >The filed is required.</small
+                >
+              </div>
             </fieldset>
             <fieldset class="form-group">
-              <input placeholder="Email" formControlName="email" class="form-control form-control-lg" type="text" />
+              <input
+                placeholder="Email"
+                formControlName="email"
+                class="form-control form-control-lg"
+                type="text"
+                [class.invalid]="
+                  authForm.get('email').invalid &&
+                  (authForm.get('email').dirty || authForm.get('email').touched)
+                "
+              />
+              <div
+                *ngIf="
+                  authForm.get('email').invalid &&
+                  authForm.get('email').errors &&
+                  (authForm.get('email').dirty || authForm.get('email').touched)
+                "
+              >
+                <small
+                  class="error-messages"
+                  *ngIf="authForm.get('email').hasError('required')"
+                >
+                  The field is required.
+                </small>
+                <small
+                  class="error-messages"
+                  *ngIf="authForm.get('email').hasError('email')"
+                >
+                  Email is invalid.
+                </small>
+              </div>
             </fieldset>
             <fieldset class="form-group">
-              <input placeholder="Password" formControlName="password" class="form-control form-control-lg"
-                type="password" />
+              <input
+                placeholder="Password"
+                formControlName="password"
+                class="form-control form-control-lg"
+                type="password"
+                [class.invalid]="
+                  authForm.get('password').invalid &&
+                  (authForm.get('password').dirty ||
+                    authForm.get('password').touched)
+                "
+              />
+              <div
+                *ngIf="
+                  authForm.get('password').invalid &&
+                  authForm.get('password').errors &&
+                  (authForm.get('password').dirty ||
+                    authForm.get('password').touched)
+                "
+              >
+                <small
+                  class="error-messages"
+                  *ngIf="authForm.get('password').hasError('required')"
+                >
+                  The field is required.
+                </small>
+                <small
+                  class="error-messages"
+                  *ngIf="authForm.get('password').hasError('minlength')"
+                >
+                  The mininum of the field is 6 characters.
+                </small>
+              </div>
             </fieldset>
-            <button class="btn btn-lg btn-primary pull-xs-right" type="submit">
-              {{title}}
+            <button
+              class="btn btn-lg btn-primary pull-xs-right"
+              [disabled]="authForm.invalid"
+            >
+              {{ title }}
             </button>
           </fieldset>
         </form>
       </div>
-
     </div>
   </div>
 </div>

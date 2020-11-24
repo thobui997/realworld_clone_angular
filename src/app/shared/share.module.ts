@@ -7,6 +7,7 @@ import { ArticlePreviewComponent } from './article-helper/article-preview/articl
 import { ButtonFavoriteComponent } from './buttons/button-favorite/button-favorite.component';
 import { ButtonFollowComponent } from './buttons/button-follow/button-follow.component';
 import { ShowAuthenticateDirective } from './directives/show-authenticate.directive';
+import { NgxPaginationModule } from 'ngx-pagination';
 
 @NgModule({
   declarations: [
@@ -17,7 +18,7 @@ import { ShowAuthenticateDirective } from './directives/show-authenticate.direct
     ButtonFollowComponent,
     ButtonFavoriteComponent,
   ],
-  imports: [CommonModule, RouterModule],
+  imports: [CommonModule, RouterModule, NgxPaginationModule],
   exports: [
     CommonModule,
     RouterModule,

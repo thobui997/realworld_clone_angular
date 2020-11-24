@@ -1,1 +1,15 @@
 /* You can add global styles to this file, and also import other style files */
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+.invalid:focus {
+  border-color: #f30904;
+  outline: none;
+}
+
+.invalid {
+  border: 1px solid #f30904;
+}

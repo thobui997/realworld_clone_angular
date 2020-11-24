@@ -15,9 +15,12 @@ export class ArticleListComponent implements OnInit, OnDestroy {
   listArticle: ArticleModel.MultipleArticle;
   unsubscribe$: Subject<any> = new Subject<any>();
   isLoading = true;
+  currentPage: number;
+  @Input() limit: number;
   @Input() set config(listConfig: ArticleListConfig) {
     if (listConfig) {
       this.listConfig = listConfig;
+      this.currentPage = 1;
       this.runQueryArticle();
     }
   }
@@ -31,9 +34,13 @@ export class ArticleListComponent implements OnInit, OnDestroy {
   }
 
   runQueryArticle(): void {
+    if (this.limit) {
+      this.listConfig.filters.limit = this.limit;
+      this.listConfig.filters.offset = this.limit * (this.currentPage - 1);
+    }
     iif(
       () => this.listConfig.type === 'feed',
-      this.articleService.getFeedArticles(),
+      this.articleService.getFeedArticles(this.listConfig),
       this.articleService.getListArticle(this.listConfig)
     )
       .pipe(
@@ -41,5 +48,10 @@ export class ArticleListComponent implements OnInit, OnDestroy {
         finalize(() => (this.isLoading = false))
       )
       .subscribe((articles) => (this.listArticle = articles));
+  }
+
+  pageChanged(pageNumber): void {
+    this.currentPage = pageNumber;
+    this.runQueryArticle();
   }
 }

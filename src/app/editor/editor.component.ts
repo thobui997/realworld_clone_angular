@@ -8,7 +8,7 @@ import {
 import { ArticlesService } from 'app/apis/articles/articles.service';
 import { ArticleModel } from '../apis/articles/article.model';
 import { finalize, pluck, switchMap, tap } from 'rxjs/operators';
-import { ActivatedRoute } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 import { iif, Observable, of } from 'rxjs';
 
 @Component({
@@ -25,6 +25,7 @@ export class EditorComponent implements OnInit {
   constructor(
     private fb: FormBuilder,
     private route: ActivatedRoute,
+    private router: Router,
     private articleService: ArticlesService
   ) {
     this.article.tagList = [];
@@ -69,7 +70,7 @@ export class EditorComponent implements OnInit {
       this.articleService.createArticle(body)
     )
       .pipe(finalize(() => (this.isSubmitting = false)))
-      .subscribe();
+      .subscribe((success) => this.router.navigate(['/article', success.slug]));
   }
 
   addTag(): void {

@@ -16,13 +16,7 @@ export class ArticlesService {
   getListArticle(
     parameter: ArticleListConfig
   ): Observable<ArticleModel.MultipleArticle> {
-    let params = {};
-    const keys = Object.keys(parameter.filters);
-    if (keys.length > 0) {
-      keys.forEach((key) => {
-        params = new HttpParams().set(key, parameter.filters[key]);
-      });
-    }
+    const params = this.getParam(parameter);
     return this.httpClient.get<ArticleModel.MultipleArticle>(
       `${environment.api_url}/articles`,
       {
@@ -31,9 +25,13 @@ export class ArticlesService {
     );
   }
 
-  getFeedArticles(): Observable<ArticleModel.MultipleArticle> {
+  getFeedArticles(
+    parameter: ArticleListConfig
+  ): Observable<ArticleModel.MultipleArticle> {
+    const params = this.getParam(parameter);
     return this.httpClient.get<ArticleModel.MultipleArticle>(
-      `${environment.api_url}/articles/feed`
+      `${environment.api_url}/articles/feed`,
+      { params }
     );
   }
 
@@ -46,7 +44,7 @@ export class ArticlesService {
   createArticle(body: BodyArticle): Observable<ArticleModel.Article> {
     return this.httpClient
       .post<ArticleModel.Article>(`${environment.api_url}/articles`, body)
-      .pipe(map((data: any) => data.articles));
+      .pipe(map((data: any) => data.article));
   }
 
   updateArticle(
@@ -58,7 +56,7 @@ export class ArticlesService {
         `${environment.api_url}/articles/${slug}`,
         body
       )
-      .pipe(map((data: any) => data.articles));
+      .pipe(map((data: any) => data.article));
   }
 
   deleteArticle(slug: string): Observable<unknown> {
@@ -76,5 +74,17 @@ export class ArticlesService {
     return this.httpClient.delete<ArticleModel.Article>(
       `${environment.api_url}/articles/${slug}/favorite`
     );
+  }
+
+  private getParam(parameter: ArticleListConfig): HttpParams {
+    let params = new HttpParams();
+    const keys = Object.keys(parameter.filters);
+    if (keys.length > 0) {
+      keys.forEach((key) => {
+        params = params.set(key, parameter.filters[key]);
+      });
+    }
+
+    return params;
   }
 }

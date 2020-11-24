@@ -16,7 +16,11 @@
                 type="text"
                 placeholder="URL of profile picture"
                 formControlName="image"
+                #imagePath
               />
+              <div style="margin: 15px 0; width: 100%;">
+                <img [src]="imagePath?.value" class="img-fluid" />
+              </div>
             </fieldset>
 
             <fieldset class="form-group">
@@ -25,7 +29,27 @@
                 type="text"
                 placeholder="Username"
                 formControlName="username"
+                [class.invalid]="
+                  settingFormGroup.get('username').invalid &&
+                  (settingFormGroup.get('username').dirty ||
+                    settingFormGroup.get('username').touched)
+                "
               />
+              <div
+                *ngIf="
+                  settingFormGroup.get('username').invalid &&
+                  settingFormGroup.get('username').errors &&
+                  (settingFormGroup.get('username').dirty ||
+                    settingFormGroup.get('username').touched)
+                "
+              >
+                <small
+                  class="error-messages"
+                  *ngIf="settingFormGroup.get('username').hasError('required')"
+                >
+                  The field is required.
+                </small>
+              </div>
             </fieldset>
 
             <fieldset class="form-group">
@@ -44,19 +68,77 @@
                 type="email"
                 placeholder="Email"
                 formControlName="email"
+                [class.invalid]="
+                  settingFormGroup.get('email').invalid &&
+                  (settingFormGroup.get('email').dirty ||
+                    settingFormGroup.get('email').touched)
+                "
               />
+
+              <!-- Dispplay message-->
+              <div
+                *ngIf="
+                  settingFormGroup.get('email').invalid &&
+                  settingFormGroup.get('email').errors &&
+                  (settingFormGroup.get('email').dirty ||
+                    settingFormGroup.get('email').touched)
+                "
+              >
+                <small
+                  class="error-messages"
+                  *ngIf="settingFormGroup.get('email').hasError('required')"
+                >
+                  The field is required.
+                </small>
+                <small
+                  class="error-messages"
+                  *ngIf="settingFormGroup.get('email').hasError('email')"
+                >
+                  Email is invalid.
+                </small>
+              </div>
             </fieldset>
 
             <fieldset class="form-group">
               <input
                 class="form-control form-control-lg"
                 type="password"
-                placeholder="New Password"
+                placeholder="Enter Your Password"
                 formControlName="password"
+                [class.invalid]="
+                  settingFormGroup.get('password').invalid &&
+                  (settingFormGroup.get('password').dirty ||
+                    settingFormGroup.get('password').touched)
+                "
               />
+              <!-- Dispplay message-->
+              <div
+                *ngIf="
+                  settingFormGroup.get('password').invalid &&
+                  settingFormGroup.get('password').errors &&
+                  (settingFormGroup.get('password').dirty ||
+                    settingFormGroup.get('password').touched)
+                "
+              >
+                <small
+                  class="error-messages"
+                  *ngIf="settingFormGroup.get('password').hasError('required')"
+                >
+                  The field is required.
+                </small>
+                <small
+                  class="error-messages"
+                  *ngIf="settingFormGroup.get('password').hasError('minlength')"
+                >
+                  The mininum length of the field is 6 characters.
+                </small>
+              </div>
             </fieldset>
 
-            <button class="btn btn-lg btn-primary pull-xs-right" type="submit">
+            <button
+              [disabled]="settingFormGroup.invalid"
+              class="btn btn-lg btn-primary pull-xs-right"
+            >
               Update Settings
             </button>
           </fieldset>
