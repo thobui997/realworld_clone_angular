@@ -12,8 +12,7 @@ import { finalize, takeUntil } from 'rxjs/operators';
 })
 export class ArticleListComponent implements OnInit, OnDestroy {
   listConfig: ArticleListConfig;
-  listArticle$: Observable<ArticleModel.Article[]>;
-  listArticle: ArticleModel.Article[];
+  listArticle: ArticleModel.MultipleArticle;
   unsubscribe$: Subject<any> = new Subject<any>();
   isLoading = true;
   @Input() set config(listConfig: ArticleListConfig) {
@@ -32,13 +31,11 @@ export class ArticleListComponent implements OnInit, OnDestroy {
   }
 
   runQueryArticle(): void {
-    this.listArticle$ = iif(
+    iif(
       () => this.listConfig.type === 'feed',
       this.articleService.getFeedArticles(),
       this.articleService.getListArticle(this.listConfig)
-    );
-
-    this.listArticle$
+    )
       .pipe(
         takeUntil(this.unsubscribe$),
         finalize(() => (this.isLoading = false))

@@ -1,5 +1,6 @@
-import { HttpClientModule } from '@angular/common/http';
 import { NgModule } from '@angular/core';
+import { HttpClientModule } from '@angular/common/http';
+import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { BrowserModule } from '@angular/platform-browser';
 import { NgProgressModule } from 'ngx-progressbar';
 import { NgProgressHttpModule } from 'ngx-progressbar/http';
@@ -11,12 +12,13 @@ import { HomeModule } from './home/home.module';
 import { FooterComponent } from './shared/layouts/footer/footer.component';
 import { HeaderComponent } from './shared/layouts/header/header.component';
 import { ShareModule } from './shared/share.module';
-
+import { ToastrModule } from 'ngx-toastr';
 
 @NgModule({
   declarations: [AppComponent, HeaderComponent, FooterComponent],
   imports: [
     BrowserModule,
+    BrowserAnimationsModule,
     AppRoutingModule,
     AuthModule,
     HttpClientModule,
@@ -26,9 +28,15 @@ import { ShareModule } from './shared/share.module';
     NgProgressModule.withConfig({
       min: 20,
       fixed: true,
-      color: 'green'
+      color: 'green',
     }),
     NgProgressHttpModule,
+    ToastrModule.forRoot({
+      positionClass: 'toast-bottom-right',
+      preventDuplicates: true,
+      progressBar: true,
+      closeButton: true
+    }),
   ],
   providers: [],
   bootstrap: [AppComponent],

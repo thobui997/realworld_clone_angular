@@ -10,6 +10,6 @@ export namespace CommentModel {
   }
 
   export interface MultipleComment {
-    comments: [SingleComment];
+    comments: SingleComment[];
   }
 }

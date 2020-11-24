@@ -1,9 +1,9 @@
-<app-article-preview *ngFor="let article of listArticle" [article]="article"></app-article-preview>
+<app-article-preview *ngFor="let article of listArticle.articles" [article]="article"></app-article-preview>
 
 <div class="app-article-preview" [hidden]="!isLoading">
   Loading articles...
 </div>
 
-<div class="app-article-preview" [hidden]="isLoading || listArticle.length > 0">
+<div class="app-article-preview" [hidden]="isLoading || listArticle.articles.length > 0">
   No articles are here... yet.
 </div>

@@ -5,6 +5,7 @@ import { environment } from 'environments/environment';
 import { Observable } from 'rxjs';
 import { map } from 'rxjs/operators';
 import { ArticleModel } from './article.model';
+import { BodyArticle } from '../../editor/editor.component';
 
 @Injectable({
   providedIn: 'root',
@@ -14,7 +15,7 @@ export class ArticlesService {
 
   getListArticle(
     parameter: ArticleListConfig
-  ): Observable<ArticleModel.Article[]> {
+  ): Observable<ArticleModel.MultipleArticle> {
     let params = {};
     const keys = Object.keys(parameter.filters);
     if (keys.length > 0) {
@@ -22,17 +23,18 @@ export class ArticlesService {
         params = new HttpParams().set(key, parameter.filters[key]);
       });
     }
-    return this.httpClient
-      .get<ArticleModel.Article[]>(`${environment.api_url}/articles`, {
+    return this.httpClient.get<ArticleModel.MultipleArticle>(
+      `${environment.api_url}/articles`,
+      {
         params,
-      })
-      .pipe(map((data: any) => data.articles));
+      }
+    );
   }
 
-  getFeedArticles(): Observable<ArticleModel.Article[]> {
-    return this.httpClient
-      .get<ArticleModel.Article[]>(`${environment.api_url}/articles/feed`)
-      .pipe(map((data: any) => data.articles));
+  getFeedArticles(): Observable<ArticleModel.MultipleArticle> {
+    return this.httpClient.get<ArticleModel.MultipleArticle>(
+      `${environment.api_url}/articles/feed`
+    );
   }
 
   getSingleArticle(slug: string): Observable<ArticleModel.Article> {
@@ -41,13 +43,16 @@ export class ArticlesService {
       .pipe(map((data: any) => data.article));
   }
 
-  createArticle(body): Observable<ArticleModel.Article> {
+  createArticle(body: BodyArticle): Observable<ArticleModel.Article> {
     return this.httpClient
       .post<ArticleModel.Article>(`${environment.api_url}/articles`, body)
       .pipe(map((data: any) => data.articles));
   }
 
-  updateArticle(slug: string, body): Observable<ArticleModel.Article> {
+  updateArticle(
+    slug: string,
+    body: BodyArticle
+  ): Observable<ArticleModel.Article> {
     return this.httpClient
       .put<ArticleModel.Article>(
         `${environment.api_url}/articles/${slug}`,
@@ -56,7 +61,7 @@ export class ArticlesService {
       .pipe(map((data: any) => data.articles));
   }
 
-  deleteArtilce(slug: string): Observable<unknown> {
+  deleteArticle(slug: string): Observable<unknown> {
     return this.httpClient.delete(`${environment.api_url}/articles/${slug}`);
   }
 

@@ -2,8 +2,13 @@
   <div class="container page">
     <div class="row">
       <div class="col-md-10 offset-md-1 col-xs-12">
-        <form [formGroup]="editorFormGroup">
-          <fieldset>
+        <form
+          *ngIf="editorFormGroup$ | async as editorFormGroup"
+          [formGroup]="editorFormGroup"
+          (ngSubmit)="onSubmitArticle(editorFormGroup)"
+          (keydown.enter)="$event.preventDefault()"
+        >
+          <fieldset [disabled]="isSubmitting">
             <fieldset class="form-group">
               <input
                 class="form-control form-control-lg"
@@ -37,18 +42,23 @@
                 class="form-control"
                 type="text"
                 placeholder="Enter tags"
+                [formControl]="tagField"
+                (keyup.enter)="addTag()"
               />
 
               <div class="tag-list">
-                <span class="tag-default tag-pill">
-                  <i class="ion-close-round"></i>
-                  tag
+                <span
+                  class="tag-default tag-pill"
+                  *ngFor="let tag of article?.tagList"
+                >
+                  <i class="ion-close-round" (click)="removeTag(tag)"></i>
+                  {{ tag }}
                 </span>
               </div>
             </fieldset>
 
-            <button class="btn btn-lg pull-xs-right btn-primary" type="button">
-              Publish Article
+            <button class="btn btn-lg pull-xs-right btn-primary">
+              {{ isModeUpdate ? 'Update Article' : 'Publish Article' }}
             </button>
           </fieldset>
         </form>

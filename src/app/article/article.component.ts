@@ -69,11 +69,14 @@ export class ArticleComponent implements OnInit {
     this.commentService
       .deleteCommentsFromAnArticle(this.article.slug, comment.id)
       .subscribe((success) => {
-        // @ts-ignore
         this.commentList.comments = this.commentList.comments.filter(
           (item) => item.id !== comment.id
         );
       });
+  }
+
+  deleteArticle(): void {
+    this.articleService.deleteArticle(this.article.slug).subscribe();
   }
 
   onToggleFollow(follow: boolean): void {
