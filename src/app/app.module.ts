@@ -9,16 +9,21 @@ import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 import { CoreModule } from './core/core.module';
 import { PageNotFoundComponent } from './page-not-found/page-not-found.component';
-import { ShareModule } from './shared/share.module';
+import { FooterComponent } from './shared/layouts/footer/footer.component';
+import { HeaderComponent } from './shared/layouts/header/header.component';
 
 @NgModule({
-  declarations: [AppComponent, PageNotFoundComponent],
+  declarations: [
+    AppComponent,
+    HeaderComponent,
+    FooterComponent,
+    PageNotFoundComponent,
+  ],
   imports: [
     BrowserModule,
     BrowserAnimationsModule,
     AppRoutingModule,
     HttpClientModule,
-    ShareModule,
     CoreModule,
     NgProgressModule.withConfig({
       min: 20,
