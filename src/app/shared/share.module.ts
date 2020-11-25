@@ -8,9 +8,13 @@ import { ButtonFavoriteComponent } from './buttons/button-favorite/button-favori
 import { ButtonFollowComponent } from './buttons/button-follow/button-follow.component';
 import { ShowAuthenticateDirective } from './directives/show-authenticate.directive';
 import { NgxPaginationModule } from 'ngx-pagination';
+import { HeaderComponent } from './layouts/header/header.component';
+import { FooterComponent } from './layouts/footer/footer.component';
 
 @NgModule({
   declarations: [
+    HeaderComponent,
+    FooterComponent,
     ShowAuthenticateDirective,
     ArticleListComponent,
     ArticleMetaComponent,
@@ -28,6 +32,8 @@ import { NgxPaginationModule } from 'ngx-pagination';
     ArticlePreviewComponent,
     ButtonFollowComponent,
     ButtonFavoriteComponent,
+    HeaderComponent,
+    FooterComponent,
   ],
 })
 export class ShareModule {}
