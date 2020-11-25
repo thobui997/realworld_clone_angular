@@ -7,11 +7,11 @@ const routes: Routes = [
     path: '',
     children: [
       {
-        path: '',
+        path: ':slug',
         component: EditorComponent,
       },
       {
-        path: ':slug',
+        path: '',
         component: EditorComponent,
       },
     ],
