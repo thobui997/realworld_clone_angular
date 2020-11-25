@@ -11,6 +11,7 @@ import { CoreModule } from './core/core.module';
 import { PageNotFoundComponent } from './page-not-found/page-not-found.component';
 import { FooterComponent } from './shared/layouts/footer/footer.component';
 import { HeaderComponent } from './shared/layouts/header/header.component';
+import { ShareModule } from './shared/share.module';
 
 @NgModule({
   declarations: [
@@ -24,6 +25,7 @@ import { HeaderComponent } from './shared/layouts/header/header.component';
     BrowserAnimationsModule,
     AppRoutingModule,
     HttpClientModule,
+    ShareModule,
     CoreModule,
     NgProgressModule.withConfig({
       min: 20,
