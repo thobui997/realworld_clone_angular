@@ -4,13 +4,14 @@ import { PageNotFoundComponent } from './page-not-found/page-not-found.component
 import { AuthGuard } from './shared/guard/auth.guard';
 
 const routes: Routes = [
-  {
-    path: '',
-    loadChildren: () => import('./auth/auth.module').then((m) => m.AuthModule),
-  },
+  { path: '', redirectTo: '/home', pathMatch: 'full' },
   {
     path: 'home',
     loadChildren: () => import('./home/home.module').then((m) => m.HomeModule),
+  },
+  {
+    path: '',
+    loadChildren: () => import('./auth/auth.module').then((m) => m.AuthModule),
   },
   {
     path: 'profile',
@@ -36,10 +37,9 @@ const routes: Routes = [
     loadChildren: () =>
       import('./article/article.module').then((m) => m.ArticleModule),
   },
-  { path: 'not-page-found', component: PageNotFoundComponent },
-  { path: '', redirectTo: '/home', pathMatch: 'full' },
-  { path: '**', redirectTo: 'not-page-found' },
+  { path: '**', component: PageNotFoundComponent },
 ];
+  
 
 @NgModule({
   imports: [
